@@ -29,6 +29,6 @@ public final class BlockMuncher extends JavaPlugin {
 	}
 
 	public ArenaManager getArenaManager() {
-		return  arenaManager;
+		return arenaManager;
 	}
 }

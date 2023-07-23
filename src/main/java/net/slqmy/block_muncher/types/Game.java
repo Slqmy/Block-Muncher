@@ -18,8 +18,9 @@ public final class Game {
 
 	public void start() {
 		arena.setState(GameState.PLAYING);
-		arena.sendTitle(ChatColor.GREEN + "GO!");
-		arena.sendMessage(ChatColor.GREEN + "Eat (break) " + ChatColor.YELLOW + ChatColor.UNDERLINE + "20" + ChatColor.GREEN + " blocks as fast as possible to win!");
+		arena.sendTitle(ChatColor.GREEN.toString() + ChatColor.BOLD + "GO!");
+		arena.sendMessage(ChatColor.GREEN + "Eat (break) " + ChatColor.YELLOW + ChatColor.UNDERLINE + "20" + ChatColor.GREEN
+				+ " blocks as fast as possible to win!");
 
 		for (final UUID uuid : arena.getPlayers()) {
 			points.put(uuid, 0);
@@ -31,17 +32,19 @@ public final class Game {
 		final int playerPoints = points.get(uuid) + 1;
 
 		if (playerPoints == 20) {
-			arena.sendMessage(ChatColor.GOLD + player.getName() + " " + ChatColor.GREEN + "has won the game! Thank you for playing.");
+			arena.sendMessage(
+					ChatColor.GOLD.toString() + ChatColor.UNDERLINE + player.getName() + " " + ChatColor.GREEN
+							+ "has won the game! Thank you for playing.");
 			arena.sendTitle(ChatColor.RED.toString() + ChatColor.BOLD + "GAME OVER!");
 
-			player.sendTitle(ChatColor.GOLD.toString() + ChatColor.BOLD + "VICTORY!", "", 10, 10 ,10);
+			player.sendTitle(ChatColor.GOLD.toString() + ChatColor.BOLD + "VICTORY!", "", 10, 10, 10);
 
 			arena.reset(true);
 
 			return;
 		}
 
-		player.sendMessage(ChatColor.YELLOW + "+" + ChatColor.UNDERLINE + "1" + ChatColor.GREEN + " Point");
+		player.sendMessage(ChatColor.YELLOW + "+1" + ChatColor.GREEN + " Point");
 		points.replace(uuid, playerPoints);
 	}
 }

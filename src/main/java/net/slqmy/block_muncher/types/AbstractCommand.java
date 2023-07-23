@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Command extends BukkitCommand {
+public abstract class AbstractCommand extends BukkitCommand {
 	private final String name;
 	private final String usage;
 	private final List<Integer> argLengths;
@@ -25,7 +25,9 @@ public abstract class Command extends BukkitCommand {
 	private final String permission;
 	private final boolean playerOnly;
 
-	public Command(@NotNull final String name, final String description, final String usage, final Integer[] argLengths, final String[] aliases, final String permission, final boolean playerOnly) {
+	public AbstractCommand(@NotNull final String name, @NotNull final String description, @NotNull final String usage,
+			final Integer @NotNull [] argLengths,
+			final String @NotNull [] aliases, @NotNull final String permission, final boolean playerOnly) {
 		super(name);
 		this.name = name;
 
@@ -42,8 +44,9 @@ public abstract class Command extends BukkitCommand {
 		this.permission = permission;
 
 		setPermissionMessage(
-						"[" + ChatColor.AQUA + ChatColor.BOLD + "First" + ChatColor.DARK_GRAY + "-" + ChatColor.AQUA + ChatColor.BOLD + "Plugin" + ChatColor.RESET + "] " + ChatColor.RED + "You must have the " + ChatColor.UNDERLINE + permission + ChatColor.RED + " permission to execute this command!"
-		);
+				"[" + ChatColor.AQUA + ChatColor.BOLD + "First" + ChatColor.DARK_GRAY + "-" + ChatColor.AQUA + ChatColor.BOLD
+						+ "Plugin" + ChatColor.RESET + "] " + ChatColor.RED + "You must have the " + ChatColor.UNDERLINE
+						+ permission + ChatColor.RED + " permission to execute this command!");
 
 		this.playerOnly = playerOnly;
 
@@ -56,19 +59,21 @@ public abstract class Command extends BukkitCommand {
 			final CommandMap map = (CommandMap) field.get(server);
 
 			map.register(name, this);
-		} catch (NoSuchFieldException | IllegalAccessException exception) {
+		} catch (final NoSuchFieldException | IllegalAccessException exception) {
 			PluginUtility.log("There was an error loading command " + name + "!");
 			PluginUtility.log(exception.getMessage());
 			exception.printStackTrace();
 		}
 	}
+
 	public abstract boolean execute(@NotNull final CommandSender sender, final String @NotNull [] args);
 
 	@Nullable
 	public abstract List<String> onTabComplete(@NotNull final CommandSender sender, final String @NotNull [] args);
 
 	@Override
-	public boolean execute(@NotNull final CommandSender sender, @NotNull final String label, final String @NotNull [] args) {
+	public boolean execute(@NotNull final CommandSender sender, @NotNull final String label,
+			final String @NotNull [] args) {
 		if (playerOnly && !(sender instanceof Player)) {
 			PluginUtility.log("/" + name + " is a player-only command!");
 			return true;
@@ -77,13 +82,14 @@ public abstract class Command extends BukkitCommand {
 		if (!argLengths.contains(args.length) || (args.length != 0 && "".equals(Arrays.toString(args).trim()))) {
 			if (sender instanceof Player) {
 				sender.sendMessage(
-								" \n" + ChatColor.RED + "Invalid command usage!\nPlease use " + ChatColor.UNDERLINE + usage + ChatColor.RED + "!\n \n"
+						" \n" + ChatColor.RED + "Invalid command usage!\nPlease use " + ChatColor.UNDERLINE + usage + ChatColor.RED
+								+ "!\n \n"
 								+ ChatColor.RESET + ChatColor.UNDERLINE + "/" + name + "\n"
 								+ ChatColor.DARK_GRAY + "• " + ChatColor.GRAY + description + "\n"
 								+ ChatColor.DARK_GRAY + "• " + ChatColor.RESET + "Usage: " + ChatColor.GRAY + usage + "\n"
-								+ ChatColor.DARK_GRAY + "• " + ChatColor.RESET + "Aliases: " + ChatColor.GRAY + String.join(", ", aliases) + "\n"
-								+ ChatColor.DARK_GRAY + "• " + ChatColor.RESET + "Permission: " + ChatColor.GRAY + permission + "\n "
-				);
+								+ ChatColor.DARK_GRAY + "• " + ChatColor.RESET + "Aliases: " + ChatColor.GRAY
+								+ String.join(", ", aliases) + "\n"
+								+ ChatColor.DARK_GRAY + "• " + ChatColor.RESET + "Permission: " + ChatColor.GRAY + permission + "\n ");
 			} else {
 				PluginUtility.log("Invalid command usage! Please use " + usage + "!");
 				PluginUtility.log("/" + name);
@@ -101,11 +107,13 @@ public abstract class Command extends BukkitCommand {
 
 	@NotNull
 	@Override
-	public List<String> tabComplete(@NotNull final CommandSender sender, @NotNull final String alias, final String @NotNull [] args) {
+	public List<String> tabComplete(@NotNull final CommandSender sender, @NotNull final String alias,
+			final String @NotNull [] args) {
 		if (argLengths.contains(args.length) && (!playerOnly || sender instanceof Player)) {
 			final List<String> results = onTabComplete(sender, args);
 
-			return results == null ? new ArrayList<>() : StringUtil.copyPartialMatches(args[args.length - 1], results, new ArrayList<>());
+			return results == null ? new ArrayList<>()
+					: StringUtil.copyPartialMatches(args[args.length - 1], results, new ArrayList<>());
 		}
 
 		return new ArrayList<>();

@@ -27,12 +27,11 @@ public final class ConfigurationUtility {
 		assert worldName != null;
 
 		return new Location(
-						Bukkit.getWorld(worldName),
-						config.getDouble("lobby-spawn.x"),
-						config.getDouble("lobby-spawn.y"),
-						config.getDouble("lobby-spawn.z"),
-						(float) config.getDouble("lobby-spawn.yaw"),
-						(float) config.getDouble("lobby-spawn.pitch")
-		);
+				Bukkit.getWorld(worldName),
+				config.getDouble("lobby-spawn.x"),
+				config.getDouble("lobby-spawn.y"),
+				config.getDouble("lobby-spawn.z"),
+				(float) config.getDouble("lobby-spawn.yaw"),
+				(float) config.getDouble("lobby-spawn.pitch"));
 	}
 }

@@ -30,16 +30,16 @@ public final class Countdown extends BukkitRunnable {
 	public void run() {
 		if (countdownSeconds == 0) {
 			arena.start();
-			cancel();
 
+			cancel();
 			return;
 		}
 
 		if (countdownSeconds <= 10 || countdownSeconds % 15 == 0) {
 			arena.sendTitle(ChatColor.YELLOW.toString() + countdownSeconds);
 			arena.sendMessage(
-							ChatColor.YELLOW + "The game will start in " + ChatColor.RED + ChatColor.UNDERLINE + countdownSeconds + ChatColor.YELLOW + " second" + (countdownSeconds == 1 ? "" : "s") + "."
-			);
+					ChatColor.YELLOW + "The game will start in " + ChatColor.RED + countdownSeconds
+							+ ChatColor.YELLOW + " second" + (countdownSeconds == 1 ? "" : "s") + ".");
 		}
 
 		countdownSeconds--;

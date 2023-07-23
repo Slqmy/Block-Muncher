@@ -26,20 +26,18 @@ public final class ArenaManager {
 			assert worldName != null;
 
 			arenas.add(
-							new Arena(
-											plugin,
-											Integer.parseInt(key),
-											new Location(
-															Bukkit.getWorld(worldName),
-															config.getDouble("arenas." + key + ".x"),
-															config.getDouble("arenas." + key + ".y"),
-															config.getDouble("arenas." + key + ".z"),
-															(float) config.getDouble("arenas." + key + ".yaw"),
-															(float) config.getDouble("arenas." + key + ".pitch")
+					new Arena(
+							plugin,
+							Integer.parseInt(key),
+							new Location(
+									Bukkit.getWorld(worldName),
+									config.getDouble("arenas." + key + ".x"),
+									config.getDouble("arenas." + key + ".y"),
+									config.getDouble("arenas." + key + ".z"),
+									(float) config.getDouble("arenas." + key + ".yaw"),
+									(float) config.getDouble("arenas." + key + ".pitch")
 
-											)
-							)
-			);
+							)));
 		}
 	}
 
