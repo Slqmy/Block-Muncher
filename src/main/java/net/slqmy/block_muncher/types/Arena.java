@@ -69,15 +69,6 @@ public final class Arena {
 		}
 	}
 
-	public void sendTitle(@NotNull final String title, @NotNull final String subtitle) {
-		for (final UUID uuid : players) {
-			final Player player = Bukkit.getPlayer(uuid);
-			assert player != null;
-
-			player.sendTitle(title, subtitle, 10, 10, 10);
-		}
-	}
-
 	public void sendTitle(@NotNull final String title) {
 		for (final UUID uuid : players) {
 			final Player player = Bukkit.getPlayer(uuid);
