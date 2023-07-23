@@ -10,10 +10,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class ConnectListener implements Listener {
+public final class ConnectionListener implements Listener {
 	private final BlockMuncher plugin;
 
-	public ConnectListener(@NotNull final BlockMuncher plugin) {
+	public ConnectionListener(@NotNull final BlockMuncher plugin) {
 		this.plugin = plugin;
 	}
 

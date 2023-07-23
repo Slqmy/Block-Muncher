@@ -62,13 +62,13 @@ public abstract class Command extends BukkitCommand {
 			exception.printStackTrace();
 		}
 	}
-	public abstract boolean execute(@NotNull final CommandSender sender, @NotNull final String[] args);
+	public abstract boolean execute(@NotNull final CommandSender sender, final String @NotNull [] args);
 
 	@Nullable
-	public abstract List<String> onTabComplete(@NotNull final CommandSender sender, @NotNull final String[] args);
+	public abstract List<String> onTabComplete(@NotNull final CommandSender sender, final String @NotNull [] args);
 
 	@Override
-	public boolean execute(@NotNull final CommandSender sender, @NotNull final String label, @NotNull final String[] args) {
+	public boolean execute(@NotNull final CommandSender sender, @NotNull final String label, final String @NotNull [] args) {
 		if (playerOnly && !(sender instanceof Player)) {
 			PluginUtility.log("/" + name + " is a player-only command!");
 			return true;
@@ -101,7 +101,7 @@ public abstract class Command extends BukkitCommand {
 
 	@NotNull
 	@Override
-	public List<String> tabComplete(@NotNull final CommandSender sender, @NotNull final String alias, @NotNull final String[] args) {
+	public List<String> tabComplete(@NotNull final CommandSender sender, @NotNull final String alias, final String @NotNull [] args) {
 		if (argLengths.contains(args.length) && (!playerOnly || sender instanceof Player)) {
 			final List<String> results = onTabComplete(sender, args);
 

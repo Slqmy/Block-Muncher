@@ -4,7 +4,6 @@ import net.slqmy.block_muncher.BlockMuncher;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public final class ConfigurationUtility {
@@ -23,7 +22,6 @@ public final class ConfigurationUtility {
 		return config.getInt("countdown-seconds");
 	}
 
-	@Contract(" -> new")
 	public static @NotNull Location getLobbySpawn() {
 		final String worldName = config.getString("lobby-spawn.world-name");
 		assert worldName != null;

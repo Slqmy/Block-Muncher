@@ -100,15 +100,17 @@ public final class Arena {
 	public void removePlayer(@NotNull final Player player) {
 		players.remove(player.getUniqueId());
 
-		if (state == GameState.COUNTDOWN && players.size() < ConfigurationUtility.getMinPlayers()) {
-			reset(false);
+		if (players.size() < ConfigurationUtility.getMinPlayers()) {
+			if (state == GameState.COUNTDOWN) {
+				reset(false);
 
-			sendMessage(ChatColor.RED + "There are not enough players! Countdown cancelled.");
-			sendTitle("");
-		} else if (state == GameState.PLAYING && players.size() < ConfigurationUtility.getMinPlayers()) {
-			reset(false);
+				sendMessage(ChatColor.RED + "There are not enough players! Countdown cancelled.");
+				sendTitle(ChatColor.RED + "Countdown cancelled!");
+			} else if (state == GameState.PLAYING) {
+				reset(false);
 
-			sendMessage(ChatColor.RED + "The game has ended as too many players have left.");
+				sendMessage(ChatColor.RED + "The game has ended because too many players have left.");
+			}
 		}
 
 		player.teleport(ConfigurationUtility.getLobbySpawn());
