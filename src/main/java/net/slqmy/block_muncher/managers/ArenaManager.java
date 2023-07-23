@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.UUID;
 
 public final class ArenaManager {
-
 	private final List<Arena> arenas = new ArrayList<>();
 
 	public ArenaManager(@NotNull final BlockMuncher plugin) {
@@ -26,9 +25,7 @@ public final class ArenaManager {
 			assert spawn != null;
 
 			arenas.add(
-							new Arena(Integer.parseInt(key),
-							spawn
-			));
+							new Arena(plugin, Integer.parseInt(key), spawn));
 		}
 	}
 

@@ -1,6 +1,6 @@
 min-players: 2
 
-countdown-seconds: 10
+countdown-seconds: 15
 
 lobby-spawn:
   world-name: world
