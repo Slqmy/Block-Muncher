@@ -1,11 +1,11 @@
-package net.slqmy.block_muncher.managers;
+package net.slqmy.block_muncher.utility;
 
 import net.slqmy.block_muncher.BlockMuncher;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 
-public final class ConfigurationManager {
+public final class ConfigurationUtility {
 	private static FileConfiguration config;
 
 	public static void setUpConfig(@NotNull final BlockMuncher plugin) {
