@@ -21,21 +21,21 @@ public final class ArenaManager {
 		final ConfigurationSection arenasList = config.getConfigurationSection("arenas");
 		assert arenasList != null;
 
-		for (final String key : arenasList.getKeys(false)) {
-			final String worldName = config.getString("arenas." + key + ".world-name");
+		for (final String arenaKey : arenasList.getKeys(false)) {
+			final String worldName = config.getString("arenas." + arenaKey + ".world-name");
 			assert worldName != null;
 
 			arenas.add(
 					new Arena(
 							plugin,
-							Integer.parseInt(key),
+							Integer.parseInt(arenaKey),
 							new Location(
 									Bukkit.getWorld(worldName),
-									config.getDouble("arenas." + key + ".x"),
-									config.getDouble("arenas." + key + ".y"),
-									config.getDouble("arenas." + key + ".z"),
-									(float) config.getDouble("arenas." + key + ".yaw"),
-									(float) config.getDouble("arenas." + key + ".pitch")
+									config.getDouble("arenas." + arenaKey + ".x"),
+									config.getDouble("arenas." + arenaKey + ".y"),
+									config.getDouble("arenas." + arenaKey + ".z"),
+									(float) config.getDouble("arenas." + arenaKey + ".yaw"),
+									(float) config.getDouble("arenas." + arenaKey + ".pitch")
 
 							)));
 		}

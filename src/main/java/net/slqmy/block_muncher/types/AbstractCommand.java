@@ -63,6 +63,7 @@ public abstract class AbstractCommand extends BukkitCommand {
 			PluginUtility.log("There was an error loading command " + name + "!");
 			PluginUtility.log(exception.getMessage());
 			exception.printStackTrace();
+			PluginUtility.log(exception);
 		}
 	}
 

@@ -2,8 +2,8 @@ package net.slqmy.block_muncher.commands;
 
 import net.slqmy.block_muncher.BlockMuncher;
 import net.slqmy.block_muncher.enums.GameState;
-import net.slqmy.block_muncher.types.Arena;
 import net.slqmy.block_muncher.types.AbstractCommand;
+import net.slqmy.block_muncher.types.Arena;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -49,12 +49,13 @@ public final class ArenaCommand extends AbstractCommand {
 
 				if (arena == null) {
 					player.sendMessage(ChatColor.RED + "You are not in an arena!");
-				} else {
-					player.sendMessage(ChatColor.GREEN + "You have left arena " + ChatColor.YELLOW + "#" + ChatColor.UNDERLINE
-							+ arena.getID() + ChatColor.GREEN + ".");
-
-					arena.removePlayer(player);
+					return true;
 				}
+
+				player.sendMessage(ChatColor.GREEN + "You have left arena " + ChatColor.YELLOW + "#" + ChatColor.UNDERLINE
+						+ arena.getID() + ChatColor.GREEN + ".");
+
+				arena.removePlayer(player);
 			} else {
 				return false;
 			}
@@ -73,24 +74,27 @@ public final class ArenaCommand extends AbstractCommand {
 						return false;
 					}
 
-					if (id > 0 && id <= plugin.getArenaManager().getArenas().size()) {
-						final Arena arena = plugin.getArenaManager().getArena(id);
-						assert arena != null;
-
-						if (arena.getState() != GameState.PLAYING) {
-							arena.addPlayer(player);
-							player.sendMessage(ChatColor.GREEN + "You have successfully been added to arena " + ChatColor.YELLOW
-									+ ChatColor.UNDERLINE + "#" + id + ChatColor.GREEN + "!");
-						} else {
-							player.sendMessage(ChatColor.RED + "There is already an active game going on in that arena!");
-						}
-					} else {
+					if (id < 0 || id >= plugin.getArenaManager().getArenas().size()) {
 						player.sendMessage(ChatColor.RED + "That arena does not exist!");
+						return false;
 					}
-				} else {
-					player.sendMessage(ChatColor.RED + "You are already in an arena! Use " + ChatColor.UNDERLINE + "/arena leave"
-							+ ChatColor.RED + " to leave.");
+
+					final Arena arena = plugin.getArenaManager().getArena(id);
+					assert arena != null;
+
+					if (arena.getState() == GameState.PLAYING) {
+						player.sendMessage(ChatColor.RED + "There is already an active game in that arena!");
+						return true;
+					}
+
+					arena.addPlayer(player);
+					player.sendMessage(ChatColor.GREEN + "You have successfully been added to arena " + ChatColor.YELLOW
+							+ ChatColor.UNDERLINE + "#" + id + ChatColor.GREEN + "!");
+					return true;
 				}
+
+				player.sendMessage(ChatColor.RED + "You are already in an arena! Use " + ChatColor.UNDERLINE + "/arena leave"
+						+ ChatColor.RED + " to leave.");
 			} else {
 				return false;
 			}
@@ -101,7 +105,7 @@ public final class ArenaCommand extends AbstractCommand {
 
 	@Override
 	public @Nullable List<String> onTabComplete(@NotNull final CommandSender sender, final String @NotNull [] args) {
-		if (args.length == 1 && "join".equalsIgnoreCase(args[0])) {
+		if (args.length == 1 && "join".equalsIgnoreCase(args[0].trim())) {
 			final List<String> results = new ArrayList<>();
 
 			for (final Arena arena : plugin.getArenaManager().getArenas()) {
