@@ -4,6 +4,7 @@ import net.slqmy.block_muncher.BlockMuncher;
 import net.slqmy.block_muncher.enums.GameState;
 import net.slqmy.block_muncher.utility.ConfigurationUtility;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -99,6 +100,17 @@ public final class Arena {
 	public void removePlayer(@NotNull final Player player) {
 		players.remove(player.getUniqueId());
 
+		if (state == GameState.COUNTDOWN && players.size() < ConfigurationUtility.getMinPlayers()) {
+			reset(false);
+
+			sendMessage(ChatColor.RED + "There are not enough players! Countdown cancelled.");
+			sendTitle("");
+		} else if (state == GameState.PLAYING && players.size() < ConfigurationUtility.getMinPlayers()) {
+			reset(false);
+
+			sendMessage(ChatColor.RED + "The game has ended as too many players have left.");
+		}
+
 		player.teleport(ConfigurationUtility.getLobbySpawn());
 	}
 
@@ -112,6 +124,10 @@ public final class Arena {
 
 	public List<UUID> getPlayers() {
 		return players;
+	}
+
+	public Game getGame() {
+		return game;
 	}
 
 	public void setState(@NotNull final GameState state) {

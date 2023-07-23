@@ -2,6 +2,7 @@ package net.slqmy.block_muncher.managers;
 
 import net.slqmy.block_muncher.BlockMuncher;
 import net.slqmy.block_muncher.types.Arena;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -21,11 +22,24 @@ public final class ArenaManager {
 		assert arenasList != null;
 
 		for (final String key : arenasList.getKeys(false)) {
-			final Location spawn = config.getObject("arenas." + key, Location.class);
-			assert spawn != null;
+			final String worldName = config.getString("arenas." + key + ".world-name");
+			assert worldName != null;
 
 			arenas.add(
-							new Arena(plugin, Integer.parseInt(key), spawn));
+							new Arena(
+											plugin,
+											Integer.parseInt(key),
+											new Location(
+															Bukkit.getWorld(worldName),
+															config.getDouble("arenas." + key + ".x"),
+															config.getDouble("arenas." + key + ".y"),
+															config.getDouble("arenas." + key + ".z"),
+															(float) config.getDouble("arenas." + key + ".yaw"),
+															(float) config.getDouble("arenas." + key + ".pitch")
+
+											)
+							)
+			);
 		}
 	}
 
